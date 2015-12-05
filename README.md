@@ -37,11 +37,8 @@ $ sudo python setup.py install
 
 #### for logcat-color usage examples, configuration and profiles, go to (logcat-color's original [README](https://github.com/marshall/logcat-color/blob/master/README.md))
 
-## <a id="Deobfuscation"></a> Deobfuscation
-
-**recat** retraces obfuscated logs using [pyretrace](https://github.com/EverythingMe/pyretrace), a python reimplementation on Proguard's Retrace, with a deobfuscation API for python.
-
 ##Deobfuscation
+**recat** retraces obfuscated logs using [pyretrace](https://github.com/EverythingMe/pyretrace), a python reimplementation on Proguard's Retrace, with a deobfuscation API for python.
 
 When looking at logs from an obfuscated release build, trace messages are obfuscated too, here's a crash log from EverythingMe Launcher's release build:
 
