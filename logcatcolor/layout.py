@@ -7,6 +7,7 @@ Licensed under the Apache License, Version 2.0
 Layouts for mapping logcat log data into a colorful terminal interface
 """
 from colorama import Fore, Back, Style
+from lxml.etree import strip_tags
 from logcatcolor.column import *
 from logcatcolor.format import Format
 import re
@@ -20,11 +21,13 @@ class Layout(object):
     TYPES = {}
     MARKER_LAYOUT = Fore.WHITE + Back.BLACK + Style.DIM + "%s" + Style.RESET_ALL
 
-    def __init__(self, config=None, profile=None, width=2000):
+    def __init__(self, config=None, profile=None, width=2000, tag_prefixes=[], retracer=None):
         self.columns = []
         self.config = config
         self.profile = profile
+        self.tag_prefixes = tag_prefixes
         self.width = width
+        self.retracer = retracer
 
         self.total_column_width = 0
         if self.COLUMNS:
@@ -48,11 +51,23 @@ class Layout(object):
         formatted = StringIO()
         for index in range(0, self.column_count):
             column = self.columns[index]
+            if self.retracer:
+                if column.NAME is 'tag':
+                    data[column.NAME] = self.retracer.tags_retracer.deobfuscate(data[column.NAME], True)
+                elif column.NAME is 'message':
+                    data[column.NAME] = self.retracer.basic_retracer.deobfuscate(data[column.NAME], False)
             formatted.write(column.format(data[column.NAME]))
             if index < self.column_count - 1:
                 formatted.write(" ")
 
         return formatted.getvalue()
+
+    def strip_tag(self, tag):
+        for prefix in self.tag_prefixes:
+            if tag.startswith(prefix + '.'):
+                tag = tag[0: tag.find('.')] + tag[tag.rfind('.'): len(tag)]
+
+        return tag
 
 @layout
 class RawLayout(Layout):

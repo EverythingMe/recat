@@ -1,14 +1,15 @@
 {
-    "name": "logcat-color",
-    "version": "0.6.1",
-    "description": "A colorful alternative to \"adb logcat\"",
-    "author": "Marshall Culpepper",
-    "author_email": "marshall.law@gmail.com",
-    "url": "http://github.com/marshall/logcat-color",
+    "name": "recat",
+    "version": "0.1",
+    "description": "A colorful alternative to \"adb logcat\" with on-the-fly-deobfuscation",
+    "author": "Rotem Mizrachi-Meidan",
+    "author_email": "rotem@everything.me",
+    "url": "http://github.com/EverythingMe/recat",
     "scripts": [
-        "logcat-color"
+        "recat"
     ],
     "install_requires": [
-        "colorama"
+        "colorama",
+        "pyretrace"
     ]
 }

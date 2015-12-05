@@ -11,6 +11,7 @@ import asynchat
 from cStringIO import StringIO
 import fcntl
 import inspect
+import pyretrace
 from logcatcolor.format import Format, detect_format
 from logcatcolor.layout import Layout
 import os
@@ -64,13 +65,17 @@ class LogcatReader(FileLineReader):
     DETECT_COUNT = 3
 
     def __init__(self, file, config, profile=None, format=None, layout=None,
-                 writer=None, width=80):
+                 writer=None, width=80, tag_prefixes=[], retracer=None):
         FileLineReader.__init__(self, file)
         self.detect_lines = []
         self.config = config
         self.profile = profile
         self.width = width
         self.writer = writer or sys.stdout
+        self.tag_prefixes = tag_prefixes
+
+        self.retracer = retracer
+
 
         self.format = None
         if format is not None:
@@ -80,7 +85,7 @@ class LogcatReader(FileLineReader):
         self.layout = None
         if layout is not None:
             LayoutType = Layout.TYPES[layout]
-            self.layout = LayoutType(config, profile, width)
+            self.layout = LayoutType(config, profile, width, tag_prefixes, retracer)
 
     def __del__(self):
         # Clear the "detect" lines if we weren't able to detect a format
@@ -100,8 +105,7 @@ class LogcatReader(FileLineReader):
         format_name = detect_format(self.detect_lines) or "brief"
         self.format = Format.TYPES[format_name]()
         if not self.layout:
-            self.layout = Layout.TYPES[format_name](self.config, self.profile,
-                self.width)
+            self.layout = Layout.TYPES[format_name](self.config, self.profile, self.width, self.tag_prefixes, self.retracer)
 
         for line in self.detect_lines:
             self.layout_line(line)
