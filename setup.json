@@ -1,5 +1,5 @@
 {
-    "name": "recat",
+    "name": "recat-color",
     "version": "0.1",
     "description": "A colorful alternative to \"adb logcat\" with on-the-fly-deobfuscation",
     "author": "Rotem Mizrachi-Meidan",

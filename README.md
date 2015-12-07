@@ -1,16 +1,20 @@
 # recat
 A colorful and highly configurable alternative to the `adb logcat` command from
-the Android SDK with on the fly deobfuscation! (based on Marshall Culpepper's great [logcat-color](https://github.com/marshall/logcat-color))
+the Android SDK with on the fly deobfuscation! (based on Marshall Culpepper's great [logcat-color](https://github.com/marshall/logcat-color)).
+
+recat uses [pyretrace](https://github.com/EverythingMe/pyretrace) to deobfuscate logs.
 
 **Note**: recat (logcat-color) is targetted at OS X and Linux, and does not currently
 work in Windows.
+
+[![PyPI version](https://badge.fury.io/py/recat-color.svg)](https://badge.fury.io/py/recat-color)
 
 # Installation
 
 **Installation via pip** 
 
 ```bash
-$ pip install recat
+$ pip install recat-color
 ```
 
 **Installation from source** (requires setuptools, may require sudo)
