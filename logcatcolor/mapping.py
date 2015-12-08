@@ -1,11 +1,3 @@
-import os
-import subprocess
-import urllib2
-import re
-
-from logcatcolor.settings import LOCAL_MAP_FILE_NAME_TEMPLATE, MAP_FILE_URL_TEMPLATE, DUMPSYS_APP_VERSION_REGEX_PATTERN
-
-
 __author__ = 'rotem'
 
 
